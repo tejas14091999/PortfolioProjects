@@ -1,3 +1,9 @@
+/*
+Covid 19 Data Exploration 
+Skills used: Joins, CTE's, Temp Tables, Windows Functions, Aggregate Functions, Creating Views, Converting Data Types
+*/
+
+
 --select * from portfolioProject1.CovidDeaths order by 3,4
 --select * from portfolioProject1.CovidVaccinations order by 3,4
 
@@ -19,7 +25,7 @@ order by 1,2
 
 
 --Total cases vs Total population
---Shows what percentage of population got COVID
+--Shows what percentage of population who got COVID
 select location, date, total_cases, population , (nullif(total_cases,0)/nullif(population,0)) * 100 as COVID_AffectedPercentage 
 from portfolioProject1.CovidDeaths
 where location like 'India' and  continent not like 'null'
@@ -68,7 +74,7 @@ where continent not like 'null'
 order by 2
 
 
-
+--Total Population vs Vaccinations
 --Total people in the world who are vaccinated
 select dea.continent, dea.location, dea.date, dea.population, vac.new_vaccinations
 from PortfolioProject1.CovidDeaths AS dea
@@ -90,6 +96,8 @@ order by 1,2,3
 --	and dea.date = vac.date
 --where dea.continent not like 'NULL'
 --order by 2,3
+
+
 
 --TEMP TABLE
 drop table if exists #PercentPopulationVaccinated
@@ -116,6 +124,8 @@ select * , (nullif(cast(Rolling_People_Vaccinated as float),0)/nullif(cast(Popul
 from #PercentPopulationVaccinated
 
 
+
+
 --CTE(Common table expression = temporary named result set that you can reference within a select, insert, update or delete statement, also can be used to create a view)
 
 with PopvsVac (Continent, location, Date, Population, New_Vaccinations, Rolling_People_Vaccinated )
@@ -136,8 +146,9 @@ select * , (nullif(Rolling_People_Vaccinated,0)/nullif(Population,0) )* 100
 from PopvsVac
 
 
---VIEW for storing data for later visualizations
 
+
+--VIEW for storing data for later visualizations
 create view PercentPopulationVaccinated as
 select dea.continent, dea.location, dea.date, dea.population, vac.new_vaccinations,
 SUM(Cast( vac.new_vaccinations as float)) OVER (Partition by dea.location order by dea.location, dea.date  ) as Rolling_People_Vaccinated
