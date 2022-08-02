@@ -86,7 +86,7 @@ order by 1,2,3
 
 
 
---TEMP TABLE  and CTE 
+--TEMP TABLE  and CTE  BASIC OUTLINE CODE:-
 --select dea.continent, dea.location, dea.date, dea.population, vac.new_vaccinations,
 --SUM(Cast( vac.new_vaccinations as bigint)) OVER (Partition by dea.location order by dea.location, dea.date  ) as Rolling_People_Vaccinated
 ----,(Rolling_People_Vaccinated/population)*100 --Cannot be done coz just column is formed above, thus use cte or temp table
@@ -103,7 +103,7 @@ order by 1,2,3
 drop table if exists #PercentPopulationVaccinated
 create table #PercentPopulationVaccinated
 (
-Continent varchar(max),--add nvarchar(50) this in main area, pt not note is that jo table main data type hai vohi data type hona chahiye
+Continent varchar(max),--the data type should be same as the one in the main table corresponding to
 Location varchar(max),
 Date varchar(max),
 Population varchar(max),
@@ -113,7 +113,6 @@ Rolling_People_Vaccinated varchar(max)
 insert into #PercentPopulationVaccinated
 select dea.continent, dea.location, dea.date, dea.population, vac.new_vaccinations,
 SUM(Cast( vac.new_vaccinations as float)) OVER (Partition by dea.location order by dea.location, dea.date  ) as Rolling_People_Vaccinated
---,(Rolling_People_Vaccinated/population)*100 --Cannot be done coz just column is formed above, thus use cte or temp table
 from PortfolioProject1.CovidDeaths AS dea
 JOIN PortfolioProject1.CovidVaccinations AS vac
 	ON dea.location = vac.location
@@ -133,8 +132,6 @@ as
 (
 select dea.continent, dea.location, dea.date, dea.population, vac.new_vaccinations,
 SUM(Cast( vac.new_vaccinations as float)) OVER (Partition by dea.location order by dea.location, dea.date  ) as Rolling_People_Vaccinated
---,(Rolling_People_Vaccinated/population)*100 --Cannot be done coz just column is formed above, thus use cte or temp table
---Rolling - col se cumulative sum nikal rha hai, into the new columsn - give example 
 from PortfolioProject1.CovidDeaths AS dea
 JOIN PortfolioProject1.CovidVaccinations AS vac
 	ON dea.location = vac.location
@@ -152,7 +149,6 @@ from PopvsVac
 create view PercentPopulationVaccinated as
 select dea.continent, dea.location, dea.date, dea.population, vac.new_vaccinations,
 SUM(Cast( vac.new_vaccinations as float)) OVER (Partition by dea.location order by dea.location, dea.date  ) as Rolling_People_Vaccinated
---,(Rolling_People_Vaccinated/population)*100 --Cannot be done coz just column is formed above, thus use cte or temp table
 from PortfolioProject1.CovidDeaths AS dea
 JOIN PortfolioProject1.CovidVaccinations AS vac
 	ON dea.location = vac.location
