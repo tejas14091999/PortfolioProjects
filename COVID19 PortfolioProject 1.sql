@@ -1,6 +1,7 @@
 /*
 Covid 19 Data Exploration 
-Skills used: Joins, CTE's, Temp Tables, Windows Functions, Aggregate Functions, Creating Views, Converting Data Types
+Skills used: Joins, CTE's, Temp Tables, Windows Functions, Aggregate Functions, Creating Views, Converting Data Types, Tableau
+TABLEAU DASHBOARDS LINK : https://public.tableau.com/app/profile/tejas.verma
 */
 
 
@@ -41,6 +42,14 @@ where continent not like 'null'
 group by location, population
 order by Percentage_Population_Infected DESC
 
+--Looking at Countries with the Highest Infection Rates compared to the Population according to passing time
+select location, population, date, MAX(total_cases) as Highest_Infection_Count, MAX((nullif(total_cases,0)/nullif(population,0))) * 100 as Percentage_Population_Infected
+from portfolioProject1.CovidDeaths
+--where location like 'India'
+where continent not like 'null'
+group by location, population, date
+order by Percentage_Population_Infected DESC
+
 
 
 --Countries with Highest Death Count per Population
@@ -56,7 +65,8 @@ order by Total_Death_Count DESC
 --Continent with Highest Death Count pe Population
 select location, MAX(total_deaths) as Total_Death_Count
 from portfolioProject1.CovidDeaths
-where continent like 'null'
+where continent like 'null' and
+location not in ('World', 'European Union', 'International', 'Upper Middle Income', 'High Income', 'Lower Middle Income', 'Low Income')
 group by location
 order by Total_Death_Count DESC
 
@@ -72,6 +82,17 @@ from portfolioProject1.CovidDeaths
 where continent not like 'null'
 --group by date
 order by 2
+
+--Expanding on the above query for better results
+--Total death count per continent
+--Europe Union is part of Europe
+select location,
+sum(cast(new_deaths as int)) as Total_Death_Count
+from portfolioProject1.CovidDeaths
+where continent like 'null'
+and location not in ('World', 'European Union', 'International','Upper Middle Income', 'High Income', 'Lower Middle Income', 'Low Income')
+group by location
+order by Total_Death_Count DESC
 
 
 --Total Population vs Vaccinations
