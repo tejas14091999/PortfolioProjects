@@ -1,6 +1,6 @@
 /*
 
-Cleaning Data in SQL Queries
+Cleaning Data with SQL Queries on Nashville Housing Data Dataset 
 
 */
 
@@ -21,7 +21,7 @@ from PortfolioProject2.NashvilleHousing
 
 ----------------------------------------------------------------------------------------
 
---Populate Property	Address Data
+--Populate Property Address Data
 --Populate the PropertyAddress according to the ParcelID
 
 --See if there are null entries in dataset, and try to figure a way to populate them
@@ -40,7 +40,7 @@ JOIN PortfolioProject2.NashvilleHousing b
 where a.PropertyAddress like 'NULL'
 
 --Populating the PropertyAddress (if the value is null in a table, populated it with the value in the b table) as a separate column
---a)Works when PropertyAddress is autopopulated as NULL in SQL Server, and is not a hardcoded NULL in sheet
+--(a)Works when PropertyAddress is autopopulated as NULL in SQL Server, and is not a hardcoded NULL in sheet
 select a.ParcelID, a.PropertyAddress,b.ParcelID, b.PropertyAddress, nullif(a.PropertyAddress , b.PropertyAddress) 
 from PortfolioProject2.NashvilleHousing a
 JOIN PortfolioProject2.NashvilleHousing b
@@ -49,7 +49,7 @@ JOIN PortfolioProject2.NashvilleHousing b
 	--[cont.] to ensure that it is different entries
 where a.PropertyAddress like 'NULL'
 
---Hardcoded null as a string in PropertyAddress	
+--(b)Hardcoded null as a string in PropertyAddress	
 select a.ParcelID, a.PropertyAddress,b.ParcelID, b.PropertyAddress, 
 CASE
 	WHEN a.PropertyAddress like 'Null' THEN  b.PropertyAddress
