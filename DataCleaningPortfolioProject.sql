@@ -163,7 +163,7 @@ order by 2
 -------------------------------------------------------------------------------------
 --Remove Duplicates rows from the table(can also use rank, order rank, row number)
 --Partition on basis of unique values of column
-
+--Create a CTE
 WITH RowNumCTE AS 
 (
 Select *,
