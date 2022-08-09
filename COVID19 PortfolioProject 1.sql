@@ -1,6 +1,8 @@
 /*
 Covid 19 Data Exploration 
-Skills used: Joins, CTE's, Temp Tables, Windows Functions, Aggregate Functions, Creating Views, Converting Data Types, Tableau
+
+SKILLS USED : Joins, CTE's, Temp Tables, Windows Functions, Aggregate Functions, Creating Views, Converting Data Types, Tableau
+
 TABLEAU DASHBOARDS LINK : https://public.tableau.com/app/profile/tejas.verma
 */
 
