@@ -2,6 +2,8 @@
 
 Cleaning Data with SQL Queries on Nashville Housing Data Dataset 
 
+SKILLS USED : SQL, Joins, CTEs, Convert, Nullif, Case Statements, String Functions
+
 */
 
 select *
